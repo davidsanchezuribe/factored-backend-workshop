@@ -1,0 +1,30 @@
+{
+  "name": "backend-nodejs",
+  "version": "1.0.0",
+  "description": "Backend API Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "build": "tsc --sourceMap false",
+    "docker-build-start": "sudo docker build . -t dei/backend-nodejs:1.0.0 && docker run -p 5000:8080 -d dei/backend-nodejs:1.0.0",
+    "docker-remove": "docker kill $(docker ps -q) && docker rm $(docker ps -a -q)"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-promise": "^7.1.0",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
+}
