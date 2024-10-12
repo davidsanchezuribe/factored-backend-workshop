@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { body, query } from 'express-validator';
+import { body, param } from 'express-validator';
 import {
   getAllPositions,
   getPosition,
@@ -28,7 +28,8 @@ positionAPI.get(
 
 positionAPI.get(
   '/:id',
-  validate([query('id').isString()]),
+  [param('id').isUUID()],
+  validate,
   (req: Request, res: Response) => {
     const { id } = req.params;
     const buildData = async () => {
@@ -41,7 +42,8 @@ positionAPI.get(
 
 positionAPI.post(
   '/',
-  validate(positionValidator),
+  positionValidator,
+  validate,
   async (req: Request, res: Response) => {
     const { title } = req.body;
     responseHelper(res, () => createPosition(title), 'Position created successfully');
@@ -50,9 +52,9 @@ positionAPI.post(
 
 positionAPI.patch(
   '/',
-  validate([...positionValidator, body('id').exists().isString()]),
+  [...positionValidator, body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id, title } = req.body;
     responseHelper(res, () => updatePosition(id, title), 'Position updated successfully');
   },
@@ -60,9 +62,9 @@ positionAPI.patch(
 
 positionAPI.delete(
   '/',
-  validate([body('id').exists().isString()]),
+  [body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id } = req.body;
     responseHelper(res, () => deletePosition(id), 'Position removed successfully');
   },

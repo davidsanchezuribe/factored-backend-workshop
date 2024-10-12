@@ -18,7 +18,7 @@ export const createPosition = (title: string) => {
 
 export const updatePosition = async (id: string, title: string) => {
   const position = await getPosition(id);
-  position.setName(title);
+  position.setTitle(title);
   return positionRepository.save(position);
 };
 

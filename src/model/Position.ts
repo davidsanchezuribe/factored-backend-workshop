@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
+// eslint-disable-next-line import/no-cycle
 import Employee from './Employee';
 
 @Entity()
@@ -11,11 +12,11 @@ class Position {
   @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-  @Column('text')
+  @Column()
     title: string;
 
   @OneToMany(() => Employee, (employee) => employee.position)
-    employees: Employee[] | undefined;
+    employees!: Employee[];
 
   constructor(title: string) {
     this.title = title;

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ValidationChain, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 
 export const getErrorMessage = (error: unknown) => {
   if (error instanceof Error) return error.message;
@@ -19,12 +19,11 @@ export const responseHelper = async (
   }
 };
 
-export const validate = (validations: ValidationChain[]) => async (
+export const validate = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  await Promise.all(validations.map((validation) => validation.run(req)));
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     next();

@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
+import EmployeeSkill from './model/EmployeeSkill';
 import Employee from './model/Employee';
 import Position from './model/Position';
 import Avatar from './model/Avatar';
@@ -31,6 +32,7 @@ export const AppDataSource = new DataSource({
     Avatar,
     Position,
     Employee,
+    EmployeeSkill,
   ],
   synchronize: true,
   logging: false,
@@ -44,3 +46,5 @@ export const positionRepository = AppDataSource.getRepository(Position);
 export const avatarRepository = AppDataSource.getRepository(Avatar);
 
 export const skillRepository = AppDataSource.getRepository(Skill);
+
+export const employeeSkillRepository = AppDataSource.getRepository(EmployeeSkill);

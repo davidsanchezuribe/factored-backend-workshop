@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import fakeDatabase from './fakeDatabase';
+import fakeDatabase from './fakers/fakeDatabase';
 import app from './server/app';
 import 'reflect-metadata';
 import { AppDataSource } from './AppDataSource';

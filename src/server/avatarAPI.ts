@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { body, query } from 'express-validator';
+import { body, param } from 'express-validator';
 import {
   getAllAvatars,
   getAvatar,
@@ -28,7 +28,8 @@ avatarAPI.get(
 
 avatarAPI.get(
   '/:id',
-  validate([query('id').isString()]),
+  [param('id').isUUID()],
+  validate,
   (req: Request, res: Response) => {
     const { id } = req.params;
     const buildData = async () => {
@@ -41,7 +42,8 @@ avatarAPI.get(
 
 avatarAPI.post(
   '/',
-  validate(avatarValidator),
+  avatarValidator,
+  validate,
   async (req: Request, res: Response) => {
     const { fileName } = req.body;
     responseHelper(res, () => createAvatar(fileName), 'Avatar created successfully');
@@ -50,9 +52,9 @@ avatarAPI.post(
 
 avatarAPI.patch(
   '/',
-  validate([...avatarValidator, body('id').exists().isString()]),
+  [...avatarValidator, body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id, fileName } = req.body;
     responseHelper(res, () => updateAvatar(id, fileName), 'Avatar updated successfully');
   },
@@ -60,9 +62,9 @@ avatarAPI.patch(
 
 avatarAPI.delete(
   '/',
-  validate([body('id').exists().isString()]),
+  [body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id } = req.body;
     responseHelper(res, () => deleteAvatar(id), 'Avatar removed successfully');
   },

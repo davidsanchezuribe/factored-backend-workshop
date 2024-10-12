@@ -5,7 +5,7 @@ class Avatar {
   @PrimaryGeneratedColumn('uuid')
     id!: string;
 
-  @Column('text')
+  @Column()
     fileName: string;
 
   constructor(fileName: string) {

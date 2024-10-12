@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { body, query } from 'express-validator';
+import { body, param } from 'express-validator';
 import {
   getAllSkills,
   getSkill,
@@ -28,7 +28,8 @@ skillAPI.get(
 
 skillAPI.get(
   '/:id',
-  validate([query('id').isString()]),
+  [param('id').isUUID()],
+  validate,
   (req: Request, res: Response) => {
     const { id } = req.params;
     const buildData = async () => {
@@ -41,7 +42,8 @@ skillAPI.get(
 
 skillAPI.post(
   '/',
-  validate(skillValidator),
+  skillValidator,
+  validate,
   async (req: Request, res: Response) => {
     const { name } = req.body;
     responseHelper(res, () => createSkill(name), 'Skill created successfully');
@@ -50,9 +52,9 @@ skillAPI.post(
 
 skillAPI.patch(
   '/',
-  validate([...skillValidator, body('id').exists().isString()]),
+  [...skillValidator, body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id, name } = req.body;
     responseHelper(res, () => updateSkill(id, name), 'Skill updated successfully');
   },
@@ -60,9 +62,9 @@ skillAPI.patch(
 
 skillAPI.delete(
   '/',
-  validate([body('id').exists().isString()]),
+  [body('id').exists().isUUID()],
+  validate,
   async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { id } = req.body;
     responseHelper(res, () => deleteSkill(id), 'Skill removed successfully');
   },
