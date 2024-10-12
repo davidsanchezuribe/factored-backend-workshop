@@ -4,6 +4,7 @@ import {
   getAllEmployees,
   getEmployee,
   deleteEmployee,
+  getRawEmployees,
 } from '../controllers/EmployeeController';
 import { responseHelper, validate } from './utils';
 
@@ -14,6 +15,18 @@ employeeAPI.get(
   (_, res: Response) => {
     const buildData = async () => {
       const allEmployees = await getAllEmployees();
+      console.log(allEmployees);
+      return { employees: allEmployees };
+    };
+    responseHelper(res, buildData);
+  },
+);
+
+employeeAPI.get(
+  '/rawData',
+  (_, res: Response) => {
+    const buildData = async () => {
+      const allEmployees = await getRawEmployees();
       return { employees: allEmployees };
     };
     responseHelper(res, buildData);

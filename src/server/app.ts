@@ -1,6 +1,6 @@
 import express from 'express';
 // libreria para permitir el accesso desde localhost:8000
-// import cors from 'cors';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import employeeAPI from './employeeAPI';
@@ -11,7 +11,7 @@ import skillAPI from './skillAPI';
 
 const app = express();
 app.use(bodyParser.json());
-// app.use(cors({ origin: 'localhost:8000' }));
+app.use(cors());
 app.use('/employee', employeeAPI);
 app.use('/position', positionAPI);
 app.use('/avatar', avatarAPI);
