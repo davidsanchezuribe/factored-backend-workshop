@@ -1,11 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies, @typescript-eslint/no-unused-vars
 import { faker } from '@faker-js/faker';
 import { ObjectLiteral, Repository } from 'typeorm';
+import fileNames from './fileNames';
 import Employee from './model/Employee';
+import Position from './model/Position';
+import Avatar from './model/Avatar';
 // @imports
 import {
-  AppDataSource,
   employeeRepository,
+  positionRepository,
+  avatarRepository,
 } from './AppDataSource';
 
 const getRandomNumberRange = (min: number, max: number) => {
@@ -60,34 +64,32 @@ const fakeRandomMany = <Type extends ObjectLiteral>(
   return fakeMany(fake, instances);
 };
 
-const fakeEmployees = () => {
-  const name = faker.name.firstName();
-  return new Employee(name);
+const fakeEmployees = (positions: Position[], avatars: Avatar[]) => () => {
+  const name = faker.person.firstName();
+  const position = getRandomElement(positions);
+  const avatar = getRandomElement(avatars);
+  return new Employee(name, position, avatar);
+};
+
+const fakePositions = () => {
+  const positionName = faker.person.jobTitle();
+  return new Position(positionName);
+};
+
+const fakeAvatars = (buildFileName: () => string) => () => {
+  const fileName = buildFileName();
+  return new Avatar(fileName);
 };
 
 // @fakers
 
 // eslint-disable-next-line arrow-body-style
 const fakeDatabase = async () => {
-  await fakeInsertMany(fakeEmployees, 30, employeeRepository);
-  return true;
+  const positions = await fakeInsertMany(fakePositions, 3, positionRepository);
+  const buildFileName = () => getRandomElement(fileNames);
+  const avatars = await fakeInsertMany(fakeAvatars(buildFileName), 3, avatarRepository);
+  await fakeInsertMany(fakeEmployees(positions, avatars), 5, employeeRepository);
+  console.log('database filled');
 };
 
-const initDatabase = () => {
-  AppDataSource.initialize()
-    .then(() => {
-      // eslint-disable-next-line
-      console.log('initialized database');
-      return fakeDatabase();
-    }).then(() => {
-      // eslint-disable-next-line
-      console.log('database filled');
-      process.exit(0);
-    })
-    .catch((error: string) => {
-      // eslint-disable-next-line
-      console.log(error);
-    });
-};
-
-initDatabase();
+export default fakeDatabase;

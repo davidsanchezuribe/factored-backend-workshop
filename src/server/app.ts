@@ -7,6 +7,8 @@ import bodyParser from 'body-parser';
 
 import clientAPI from './clientAPI';
 import employeeAPI from './employeeAPI';
+import positionAPI from './positionAPI';
+import avatarAPI from './avatarAPI';
 // @imports
 
 const app = express();
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 app.use(cors({ origin: 'localhost:8000' }));
 app.use('/client', clientAPI);
 app.use('/employee', employeeAPI);
+app.use('/position', positionAPI);
+app.use('/avatar', avatarAPI);
 // @APIs
 
 export default app;

@@ -1,6 +1,8 @@
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 import Employee from './model/Employee';
+import Position from './model/Position';
+import Avatar from './model/Avatar';
 // @imports
 
 dotenv.config();
@@ -11,6 +13,7 @@ const {
   DATABASE_USERNAME,
   DATABASE_PASSWORD,
   DATABASE_NAME,
+  FAKE_DATABASE,
 } = process.env;
 
 // eslint-disable-next-line import/prefer-default-export
@@ -22,9 +25,17 @@ export const AppDataSource = new DataSource({
   password: DATABASE_PASSWORD,
   database: DATABASE_NAME,
   entities: [
+    Avatar,
+    Position,
     Employee,
   ],
   synchronize: true,
   logging: false,
+  dropSchema: FAKE_DATABASE === 'true',
 });
+
 export const employeeRepository = AppDataSource.getRepository(Employee);
+
+export const positionRepository = AppDataSource.getRepository(Position);
+
+export const avatarRepository = AppDataSource.getRepository(Avatar);

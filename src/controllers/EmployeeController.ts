@@ -1,7 +1,15 @@
+import Position from 'model/Position';
+import Avatar from 'model/Avatar';
 import Employee from '../model/Employee';
 import { employeeRepository } from '../AppDataSource';
 
-export const getAllEmployees = () => employeeRepository.find();
+export const getAllEmployees = () => employeeRepository.find(
+  { relations: { position: true, avatar: true } },
+).then((employees) => employees.map((employee) => ({
+  name: employee.name,
+  position: employee.position.positionName,
+  avatar: employee.avatar.fileName,
+})));
 
 export const getEmployee = async (id: string) => {
   const employee = await employeeRepository.findOneBy({ id });
@@ -11,14 +19,15 @@ export const getEmployee = async (id: string) => {
   return employee;
 };
 
-export const createEmployee = (name: string) => {
-  const newEmployee = new Employee(name);
+export const createEmployee = (name: string, position: Position, avatar: Avatar) => {
+  const newEmployee = new Employee(name, position, avatar);
   return employeeRepository.insert(newEmployee);
 };
 
-export const updateEmployee = async (id: string, name: string) => {
+export const updateEmployee = async (id: string, name: string, position: Position) => {
   const employee = await getEmployee(id);
   employee.setName(name);
+  employee.setPosition(position);
   return employeeRepository.save(employee);
 };
 

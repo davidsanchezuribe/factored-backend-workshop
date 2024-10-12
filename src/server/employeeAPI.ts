@@ -3,17 +3,17 @@ import { body, query } from 'express-validator';
 import {
   getAllEmployees,
   getEmployee,
-  createEmployee,
-  updateEmployee,
+  // createEmployee,
+  // updateEmployee,
   deleteEmployee,
 } from '../controllers/EmployeeController';
 import { responseHelper, validate } from './utils';
 
 const employeeAPI = express.Router();
 
-const employeeValidator = [
-  body('name').exists().isString(),
-];
+// const employeeValidator = [
+//   body('name').exists().isString(),
+// ];
 
 employeeAPI.get(
   '/',
@@ -39,24 +39,24 @@ employeeAPI.get(
   },
 );
 
-employeeAPI.post(
-  '/',
-  validate(employeeValidator),
-  async (req: Request, res: Response) => {
-    const { name } = req.body;
-    return responseHelper(res, () => createEmployee(name), 'Employee created successfully');
-  },
-);
+// employeeAPI.post(
+//   '/',
+//   validate(employeeValidator),
+//   async (req: Request, res: Response) => {
+//     const { name } = req.body;
+//     return responseHelper(res, () => createEmployee(name), 'Employee created successfully');
+//   },
+// );
 
-employeeAPI.patch(
-  '/',
-  validate([...employeeValidator, body('id').exists().isString()]),
-  async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { id, name } = req.body;
-    return responseHelper(res, () => updateEmployee(id, name), 'Employee updated successfully');
-  },
-);
+// employeeAPI.patch(
+//   '/',
+//   validate([...employeeValidator, body('id').exists().isString()]),
+//   async (req: Request, res: Response) => {
+//     // eslint-disable-next-line @typescript-eslint/naming-convention
+//     const { id, name } = req.body;
+//     return responseHelper(res, () => updateEmployee(id, name), 'Employee updated successfully');
+//   },
+// );
 
 employeeAPI.delete(
   '/',
