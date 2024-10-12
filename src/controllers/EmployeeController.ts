@@ -7,7 +7,7 @@ export const getAllEmployees = () => employeeRepository.find(
   { relations: { position: true, avatar: true } },
 ).then((employees) => employees.map((employee) => ({
   name: employee.name,
-  position: employee.position.positionName,
+  position: employee.position.title,
   avatar: employee.avatar.fileName,
 })));
 

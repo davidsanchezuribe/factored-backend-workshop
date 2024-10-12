@@ -13,35 +13,34 @@ class Employee {
     id!: string;
 
   @Column('text')
-    name: string | null = null;
+    name: string;
 
-  @ManyToOne(() => Position, (position) => position.positionName)
-    position: Position;
+  @ManyToOne(() => Position, (position) => position.title, { nullable: true, onDelete: 'SET NULL' })
+    position: Position | null;
 
-  @ManyToOne(() => Avatar, (avatar) => avatar.fileName)
-    avatar: Avatar;
-
-  // @Column('simple-json')
-  //   skills: { skill: string, expertise: number }[];
+  @ManyToOne(() => Avatar, { nullable: true, onDelete: 'SET NULL' })
+    avatar: Avatar | null;
 
   constructor(
     name: string,
-    position: Position,
-    avatar: Avatar,
-    // skills: { skill: string, expertise: number }[],
+    position: Position | null,
+    avatar: Avatar | null,
   ) {
     this.name = name;
     this.position = position;
     this.avatar = avatar;
-    // this.skills = skills;
   }
 
   setName(name: string) {
     this.name = name;
   }
 
-  setPosition(position: Position) {
+  setPosition(position: Position | null) {
     this.position = position;
+  }
+
+  setAvatar(avatar: Avatar | null) {
+    this.avatar = avatar;
   }
 }
 

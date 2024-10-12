@@ -12,7 +12,7 @@ import { responseHelper, validate } from './utils';
 const positionAPI = express.Router();
 
 const positionValidator = [
-  body('positionName').exists().isString(),
+  body('title').exists().isString(),
 ];
 
 positionAPI.get(
@@ -43,8 +43,8 @@ positionAPI.post(
   '/',
   validate(positionValidator),
   async (req: Request, res: Response) => {
-    const { positionName } = req.body;
-    responseHelper(res, () => createPosition(positionName), 'Position created successfully');
+    const { title } = req.body;
+    responseHelper(res, () => createPosition(title), 'Position created successfully');
   },
 );
 
@@ -53,8 +53,8 @@ positionAPI.patch(
   validate([...positionValidator, body('id').exists().isString()]),
   async (req: Request, res: Response) => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { id, positionName } = req.body;
-    responseHelper(res, () => updatePosition(id, positionName), 'Position updated successfully');
+    const { id, title } = req.body;
+    responseHelper(res, () => updatePosition(id, title), 'Position updated successfully');
   },
 );
 

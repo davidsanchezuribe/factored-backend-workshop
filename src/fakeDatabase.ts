@@ -5,11 +5,13 @@ import fileNames from './fileNames';
 import Employee from './model/Employee';
 import Position from './model/Position';
 import Avatar from './model/Avatar';
+import Skill from './model/Skill';
 // @imports
 import {
   employeeRepository,
   positionRepository,
   avatarRepository,
+  skillRepository,
 } from './AppDataSource';
 
 const getRandomNumberRange = (min: number, max: number) => {
@@ -72,13 +74,18 @@ const fakeEmployees = (positions: Position[], avatars: Avatar[]) => () => {
 };
 
 const fakePositions = () => {
-  const positionName = faker.person.jobTitle();
-  return new Position(positionName);
+  const title = faker.person.jobTitle();
+  return new Position(title);
 };
 
 const fakeAvatars = (buildFileName: () => string) => () => {
   const fileName = buildFileName();
   return new Avatar(fileName);
+};
+
+const fakeSkills = () => {
+  const name = faker.person.firstName();
+  return new Skill(name);
 };
 
 // @fakers
@@ -89,6 +96,7 @@ const fakeDatabase = async () => {
   const buildFileName = () => getRandomElement(fileNames);
   const avatars = await fakeInsertMany(fakeAvatars(buildFileName), 3, avatarRepository);
   await fakeInsertMany(fakeEmployees(positions, avatars), 5, employeeRepository);
+  await fakeInsertMany(fakeSkills, 30, skillRepository);
   console.log('database filled');
 };
 

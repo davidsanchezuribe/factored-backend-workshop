@@ -11,14 +11,14 @@ export const getPosition = async (id: string) => {
   return position;
 };
 
-export const createPosition = (positionName: string) => {
-  const newPosition = new Position(positionName);
+export const createPosition = (title: string) => {
+  const newPosition = new Position(title);
   return positionRepository.insert(newPosition);
 };
 
-export const updatePosition = async (id: string, positionName: string) => {
+export const updatePosition = async (id: string, title: string) => {
   const position = await getPosition(id);
-  position.setPositionName(positionName);
+  position.setName(title);
   return positionRepository.save(position);
 };
 

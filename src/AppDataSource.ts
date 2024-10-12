@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import Employee from './model/Employee';
 import Position from './model/Position';
 import Avatar from './model/Avatar';
+import Skill from './model/Skill';
 // @imports
 
 dotenv.config();
@@ -25,6 +26,8 @@ export const AppDataSource = new DataSource({
   password: DATABASE_PASSWORD,
   database: DATABASE_NAME,
   entities: [
+    Skill,
+    Position,
     Avatar,
     Position,
     Employee,
@@ -39,3 +42,5 @@ export const employeeRepository = AppDataSource.getRepository(Employee);
 export const positionRepository = AppDataSource.getRepository(Position);
 
 export const avatarRepository = AppDataSource.getRepository(Avatar);
+
+export const skillRepository = AppDataSource.getRepository(Skill);

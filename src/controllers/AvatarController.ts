@@ -18,7 +18,7 @@ export const createAvatar = (fileName: string) => {
 
 export const updateAvatar = async (id: string, fileName: string) => {
   const avatar = await getAvatar(id);
-  avatar.setFileName(fileName);
+  avatar.setName(fileName);
   return avatarRepository.save(avatar);
 };
 
