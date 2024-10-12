@@ -12,7 +12,9 @@
       "resolveJsonModule": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true//
+      "forceConsistentCasingInFileNames": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true//
   },
   "lib": ["es2015","dom"],
   "include": ["src/**/*", "environment.d.ts"],

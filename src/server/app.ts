@@ -6,12 +6,14 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import clientAPI from './clientAPI';
+import employeeAPI from './employeeAPI';
 // @imports
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: 'localhost:8000' }));
 app.use('/client', clientAPI);
+app.use('/employee', employeeAPI);
 // @APIs
 
 export default app;
