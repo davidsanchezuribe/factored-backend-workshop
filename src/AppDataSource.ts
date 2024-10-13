@@ -10,22 +10,22 @@ import Skill from './model/Skill';
 dotenv.config();
 
 const {
-  DATABASE_HOST,
-  DATABASE_PORT,
-  DATABASE_USERNAME,
-  DATABASE_PASSWORD,
-  DATABASE_NAME,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
   FAKE_DATABASE,
 } = process.env;
 
 // eslint-disable-next-line import/prefer-default-export
 export const AppDataSource = new DataSource({
   type: 'mysql',
-  host: DATABASE_HOST,
-  port: Number(DATABASE_PORT) === -1 ? undefined : Number(DATABASE_PORT),
-  username: DATABASE_USERNAME,
-  password: DATABASE_PASSWORD,
-  database: DATABASE_NAME,
+  host: DB_HOST,
+  port: Number(DB_PORT) === -1 ? undefined : Number(DB_PORT),
+  username: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
   entities: [
     Skill,
     Position,

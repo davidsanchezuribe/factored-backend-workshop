@@ -27,7 +27,7 @@ const fakeAvatars = () => {
 };
 
 const fakeEmployees = (positions: Position[], avatars: Avatar[]) => () => {
-  const name = faker.person.firstName();
+  const name = faker.person.fullName();
   const position = getRandomElement(positions);
   const avatar = getRandomElement(avatars);
   return new Employee(name, position, avatar);
@@ -51,9 +51,13 @@ const fakeEmployeeSkills = (employees: Employee[], skills: Skill[]) => {
 // @fakers
 
 const fakeDatabase = async () => {
-  const positions = await fakeInsertMany(fakePositions, 3, positionRepository);
-  const avatars = await fakeInsertMany(fakeAvatars, 3, avatarRepository);
-  const employees = await fakeInsertMany(fakeEmployees(positions, avatars), 5, employeeRepository);
+  console.log('filling database');
+  const positions = await fakeInsertMany(fakePositions, 30, positionRepository);
+  const avatars = await fakeInsertMany(fakeAvatars, 40, avatarRepository);
+  const employees = await fakeInsertMany(fakeEmployees(
+    positions,
+    avatars,
+  ), 200, employeeRepository);
   const skills = await fakeInsertMany(fakeSkills, 30, skillRepository);
   await employeeSkillRepository.save(fakeEmployeeSkills(employees, skills));
   console.log('filled database');

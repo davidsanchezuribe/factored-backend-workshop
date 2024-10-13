@@ -19,7 +19,7 @@ const port = NODE_ENV === 'production'
 
 app.listen(port, () => {
   // eslint-disable-next-line
-  if (NODE_ENV !== 'production') console.log(`listen on port ${port}`);
+  console.log(`listen on port ${port}`);
 });
 
 AppDataSource.initialize()

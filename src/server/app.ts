@@ -11,7 +11,7 @@ import skillAPI from './skillAPI';
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:7000' }));
 app.use('/employee', employeeAPI);
 app.use('/position', positionAPI);
 app.use('/avatar', avatarAPI);
