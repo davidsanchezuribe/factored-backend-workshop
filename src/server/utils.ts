@@ -27,6 +27,7 @@ export const validate = (
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     next();
+  } else {
+    res.status(400).json({ errors: errors.array({ onlyFirstError: true }) });
   }
-  res.status(400).json({ errors: errors.array({ onlyFirstError: true }) });
 };
