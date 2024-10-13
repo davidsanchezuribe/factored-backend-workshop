@@ -22,6 +22,10 @@ app.listen(port, () => {
   console.log(`listen on port ${port}`);
 });
 
+app.get('/factored-backend', (req, res) => {
+  res.send('Factored Backend - David Sanchez Uribe');
+});
+
 AppDataSource.initialize()
   .then(() => {
     // eslint-disable-next-line
